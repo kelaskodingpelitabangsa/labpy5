@@ -18,6 +18,8 @@ while True:
     print("Silahkan pilih menu :")
     i = input("(T)ambah | (U)bah | (H)apus | (C)ari | (L)ihat | (K)eluar : ")
 
+
+
 #Tambah data
     if i.lower() == 't':
         print("Silahkan isi data di bawah ini,")
@@ -33,13 +35,12 @@ while True:
         UTS = mahasiswa['uts']
         UAS = mahasiswa['uas']
         TUGAS = mahasiswa['tugas']
-        mahasiswa['nilai_akhir'] = TUGAS*0.30 + UTS*0.35 + UAS*0.35
+        mahasiswa['nilai_akhir'] = UTS*0.35 + UAS*0.35 + TUGAS*0.30
         NILAI_AKHIR = mahasiswa['nilai_akhir']
 
         KEY = mahasiswa['nim']
         data_mahasiswa.update({KEY:mahasiswa})
-        print(data_mahasiswa)
-
+    
         print("-"*70)
         print(f"|{'Nama':^15}|{'NIM':^10}|{'UTS':^8}|{'UAS':^8}|{'Tugas':^8}|{'Nilai Akhir':^14}|")
         print("="*70)
@@ -50,45 +51,52 @@ while True:
         if is_done == 'n':
             break
 
-    #Lihat Data
+#Lihat Data
     elif i.lower() == 'l':
-        print("-"*70)
-        print(f"|{'DAFTAR MAHASISWA':^68}|")
-        print("-"*70)
-        print(f"|{'No':^4}|{'Nama':^15}|{'NIM':^10}|{'UTS':^7}|{'UAS':^7}|{'Tugas':^7}|{'Nilai Akhir':^12}|")
-        print("="*70)
-        no = 1
-        for mahasiswa in data_mahasiswa.items():
-            print(f"|{no:^4}|{NAMA:^15}|{KEY:^10}|{UTS:^7}|{UAS:^7}|{TUGAS:^7}|{NILAI_AKHIR:^12.2f}|")            
-            no += 1
+        if data_mahasiswa.items():
+            print("-"*70)
+            print(f"|{'DAFTAR MAHASISWA':^68}|")
+            print("-"*70)
+            print(f"|{'No':^4}|{'Nama':^15}|{'NIM':^10}|{'UTS':^7}|{'UAS':^7}|{'Tugas':^7}|{'Nilai Akhir':^12}|")
+            print("="*70)
+
+            no = 1
+            for mahasiswa in data_mahasiswa.items():
+                print(f"|{no:^4}|{mahasiswa[1]['nama']:^15}|{mahasiswa[1]['nim']:^10}|{mahasiswa[1]['uts']:^7}|{mahasiswa[1]['uas']:^7}|{mahasiswa[1]['tugas']:^7}|{mahasiswa[1]['nilai_akhir']:^12.2f}|")
+                no += 1
+
+        else:
+            print("-"*70)
+            print(f"|{'DAFTAR MAHASISWA':^68}|")
+            print("-"*70)
+            print(f"|{'No':^4}|{'Nama':^15}|{'NIM':^10}|{'UTS':^7}|{'UAS':^7}|{'Tugas':^7}|{'Nilai Akhir':^12}|")
+            print("="*70)
+            print(f"|{'TIDAK ADA DATA':^68}|")
+            print("="*70)
 
         is_done = input("Apakah anda ingin melanjutkan (y/n) : ")
         if is_done == 'n':
             break
 
-    #Ubah data
+#Ubah data
     elif i.lower() == 'u':
         print("Silahkan masukkan NIM yang akan di ubah datanya,")
-        nim = int(input("NIM           : "))
-        if nim in data_mahasiswa.keys():
-            mahasiswa['uts'] = int(input("Nilai UTS      : "))
-            mahasiswa['uas'] = int(input("Nilai UAS      : "))
-            mahasiswa['tugas'] = int(input("Nilai Tugas    : "))
-            NAMA = mahasiswa['nama']
-            NIM = mahasiswa['nim']
-            UTS = mahasiswa['uts']
-            UAS = mahasiswa['uas']
-            TUGAS = mahasiswa['tugas']
-            mahasiswa['nilai_akhir'] = TUGAS*0.30 + UTS*0.35 + UAS*0.35
-            NILAI_AKHIR = mahasiswa['nilai_akhir']
-
-            KEY = mahasiswa['nim']
-            data_mahasiswa.update({KEY:mahasiswa})
+        nim_input = int(input("NIM            : "))
+        if nim_input in data_mahasiswa.keys():
+            data_mahasiswa[nim_input]['uts'] = int(input("Nilai UTS      : "))
+            data_mahasiswa[nim_input]['uas'] = int(input("Nilai UAS      : "))
+            data_mahasiswa[nim_input]['tugas'] = int(input("Nilai Tugas    : "))
+            UTS_ = data_mahasiswa[nim_input]['uts']
+            UAS_ = data_mahasiswa[nim_input]['uas']
+            TUGAS_ = data_mahasiswa[nim_input]['tugas']
+            data_mahasiswa[nim_input]['nilai_akhir']= UTS_*0.35 + UAS_*0.35 + TUGAS_*0.30
+            NILAI_AKHIR_ = data_mahasiswa[nim_input]['nilai_akhir']
             
             print("-"*70)
             print(f"|{'Nama':^15}|{'NIM':^10}|{'UTS':^8}|{'UAS':^8}|{'Tugas':^8}|{'Nilai Akhir':^14}|")
             print("="*70)
-            print(f"|{NAMA:^15}|{NIM:^10}|{UTS:^8}|{UAS:^8}|{TUGAS:^8}|{NILAI_AKHIR:^14.2f}|")
+            # print(f"|{data_mahasiswa[nim_input]['nama']:^15}|{data_mahasiswa[nim_input]['nim']:^10}|{data_mahasiswa[nim_input]['uts']:^8}|{data_mahasiswa[nim_input]['uas']:^8}|{data_mahasiswa[nim_input]['tugas']:^8}|{data_mahasiswa[nim_input]['nilai_akhir']:^14.2f}|")
+            print(f"|{data_mahasiswa[nim_input]['nama']:^15}|{data_mahasiswa[nim_input]['nim']:^10}|{UTS_:^8}|{UAS_:^8}|{TUGAS_:^8}|{NILAI_AKHIR_:^14.2f}|")
             print("-"*70)
 
 
@@ -99,45 +107,55 @@ while True:
         if is_done == 'n':
             break
 
-    #Hapus Data
+#Hapus Data
     elif i.lower() == 'h':
-        print("Silahkan masukkan nama yang akan di hapus,")
-        nim = int(input("Nama           : "))
-        if nim in data_mahasiswa.keys():
-            del data_mahasiswa[nim]
-            print(f"Data NIM {nim} berhasil di hapus")
+        print("Silahkan masukkan NIM yang akan di hapus,")
+        nim_input = int(input("NIM            : "))
+        if nim_input in data_mahasiswa.keys():
+            del data_mahasiswa[nim_input]
+            print(f"Data NIM {nim_input} berhasil di hapus")
 
         else:
-            print(f"NIM {nim} tidak ditemukan!!!")
+            print(f"NIM {nim_input} tidak ditemukan!!!")
 
         is_done = input("Apakah anda ingin melanjutkan (y/n) : ")
         if is_done == 'n':
             break
 
-    #Cari Data
+#Cari Data
     elif i.lower() == 'c':
+        print(data_mahasiswa.keys())
         print("Silahkan masukkan NIM yang akan di cari,")
-        nim = int(input("NIM           : "))
-        # print(data_mahasiswa.get(j))
-        if nim in data_mahasiswa.keys():
+        nim_input = int(input("NIM           : "))
+        if nim_input in data_mahasiswa.keys():
             print("-"*70)
             print(f"|{'DAFTAR MAHASISWA':^68}|")
             print("-"*70)
             print(f"|{'Nama':^15}|{'NIM':^10}|{'UTS':^8}|{'UAS':^8}|{'Tugas':^8}|{'Nilai Akhir':^14}|")
             print("="*70)
-            print(f"|{NAMA:^15}|{NIM:^10}|{UTS:^8}|{UAS:^8}|{TUGAS:^8}|{NILAI_AKHIR:^14.2f}|")
+            print(f"|{data_mahasiswa[nim_input]['nama']:^15}|{data_mahasiswa[nim_input]['nim']:^10}|{data_mahasiswa[nim_input]['uts']:^8}|{data_mahasiswa[nim_input]['uas']:^8}|{data_mahasiswa[nim_input]['tugas']:^8}|{data_mahasiswa[nim_input]['nilai_akhir']:^14.2f}|")
             print("-"*70)
+            # print(data_mahasiswa[nim_input]['nama'])
         else:
-            print(f"NIM {nim} tidak ditemukan!!!")
+            print(f"NIM {nim_input} tidak ditemukan!!!")
 
         is_done = input("Apakah anda ingin melanjutkan (y/n) : ")
         if is_done == 'n':
             break
     
-    #Keluar
+#Keluar
     elif i.lower() == 'k':
         break
 
+#Dump
+    elif i.lower() == 'dump':
+        print(data_mahasiswa)
+        
+        is_done = input("Apakah anda ingin melanjutkan (y/n) : ")
+        if is_done == 'n':
+            break
+
+#Jika input user tidak ditemukan
     else:
         print("Silahkan pilih menu yang tersedia!!!")
         is_done = input("Apakah anda ingin melanjutkan (y/n) : ")
